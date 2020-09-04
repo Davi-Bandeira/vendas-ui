@@ -1,0 +1,32 @@
+#navbarTogglerDemo02{
+  margin-left: 10px;
+  font-size: 18px;
+}
+#formProduct{
+  margin-left: 15px;
+}
+#formProducts{
+  margin-top: 20px;
+  margin-left: 20px;
+}
+#nameProduct{
+  width: 1000px;
+}
+#priceProduct{
+  width: 1000px;
+}
+#products{
+  margin: 50 auto;
+  background-color:#f8f9fa;;
+  border-radius: 10px;
+  padding: 10px;
+  width: 1050px;
+}
+#thead{
+  background: #9a9a9c57;
+}
+#table{
+  margin-top: 20px;
+}
+
+

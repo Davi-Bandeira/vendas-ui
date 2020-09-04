@@ -1,0 +1,58 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item  active">
+        <a class="nav-link " routerLink="/client">Clientes</a>
+      </li>
+      <li class="nav-item  active">
+        <a class="nav-link" routerLink="/product" id="formProduct">Produtos</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+  <div id="formClients">
+      <p class="h2 mb-2">Cadastrar Clientes</p>
+      <div class="form-group">
+          <input type="text" name="nameClient" [(ngModel)]="client.name" class="form-control" id="nameClient" placeholder="Digite o nome">
+      </div>
+      <div class="form-group">
+          <input type="text" name="emailClient" [(ngModel)]="client.email" class="form-control" id="emailClient" placeholder="Digite o email">
+      </div>
+      <button type="submit" class="btn btn-primary" (click)="save()">Salvar</button>
+  </div>
+</div>
+
+<div class="container" id="table">
+  <div class="panel panel-default">
+
+    <div class="panel-body">
+
+        <form class="form-inline">
+        </form>
+
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered" >
+        <thead id="thead">
+          <tr>
+            <th>id</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Atulizar</th>
+            <th>Remover</th>
+          </tr>
+        </thead>
+          <tr *ngFor="let client of clients" id="clients">
+            <td>{{client.id}}</td>
+            <td>{{client.name}}</td>
+            <td>{{client.email}}</td>
+            <td><button  class='btn btn-primary' (click)="update(client.id)">Atualizar</button></td>
+            <td><button  class='btn btn-danger'  (click)="remove(client.id)">Remover</button></td>
+         </tr>
+      </table>
+    </div>
+  </div>
+</div>
