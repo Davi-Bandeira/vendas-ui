@@ -5,17 +5,17 @@
 #formMenu{
   margin-left: 15px;
 }
-#formProducts{
+#formSales{
   margin-top: 20px;
   margin-left: 20px;
 }
-#nameProduct{
+#clientSale{
   width: 1000px;
 }
-#priceProduct{
+#productSale{
   width: 1000px;
 }
-#products{
+#sales{
   margin: 50 auto;
   background-color:#f8f9fa;;
   border-radius: 10px;
@@ -28,5 +28,3 @@
 #table{
   margin-top: 20px;
 }
-
-

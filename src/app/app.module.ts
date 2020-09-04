@@ -9,13 +9,15 @@ import { ClientComponent } from './client/client.component';
 import { ProductComponent } from './product/product.component';
 //import { routing } from './app.routing';
 import {ClientService} from './client/client.service';
+import { SaleComponent } from './sale/sale.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ClientComponent,
-    ProductComponent
+    ProductComponent,
+    SaleComponent
   ],
   imports: [
     BrowserModule,
