@@ -8,21 +8,23 @@ import { SaleModel } from './sale.model';
 })
 export class SaleService {
 
+  private apiUrl = "http://localhost:3000/vendas/";
+
   constructor(private http: HttpClient) { }
 
   listSales(): Observable<any>{
-    return this.http.get("http://localhost:3000/vendas/");
+    return this.http.get(this.apiUrl);
   }
 
   saveSale(sale: SaleModel): Observable<any>{
-    return this.http.post("http://localhost:3000/vendas/",sale);
+    return this.http.post(this.apiUrl,sale);
   }
 
   updateSale(id: any, sale: SaleModel):Observable<any>{
-    return this.http.put("http://localhost:3000/vendas/".concat(id),sale);
+    return this.http.put(this.apiUrl.concat(id),sale);
   }
 
   removeSale(id:any){
-    return this.http.delete("http://localhost:3000/vendas/".concat(id));
+    return this.http.delete(this.apiUrl.concat(id));
   }
 }

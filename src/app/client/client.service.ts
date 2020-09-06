@@ -8,21 +8,23 @@ import { ClientModel } from './client.model';
 })
 export class ClientService {
 
+  private apiUrl="http://localhost:3000/clientes/";
+
   constructor(private http: HttpClient) { }
 
   listClients(): Observable<any>{
-    return this.http.get("http://localhost:3000/clientes/");
+    return this.http.get(this.apiUrl);
   }
 
   saveClient(client: ClientModel): Observable<any>{
-    return this.http.post("http://localhost:3000/clientes/",client);
+    return this.http.post(this.apiUrl,client);
   }
 
   updateClient(id: any, client: ClientModel):Observable<any>{
-    return this.http.put("http://localhost:3000/clientes/".concat(id),client);
+    return this.http.put(this.apiUrl.concat(id),client);
   }
 
   removeClient(id:any){
-    return this.http.delete("http://localhost:3000/clientes/".concat(id));
+    return this.http.delete(this.apiUrl.concat(id));
   }
 }
