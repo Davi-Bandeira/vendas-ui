@@ -8,7 +8,7 @@ import { ProductModel } from './product.model';
 })
 export class ProductService {
 
-  private apiUrl = "http://localhost:3000/produtos/";
+  private apiUrl = "http://localhost:8080/products/";
 
   constructor(private http: HttpClient) { }
 
@@ -24,7 +24,11 @@ export class ProductService {
     return this.http.put(this.apiUrl.concat(id),product);
   }
 
-  removeProduct(id:any){
+  removeProduct(id:any):Observable<any>{
     return this.http.delete(this.apiUrl.concat(id));
+  }
+
+  searchProduct(id:any): Observable<any>{
+    return this.http.get(this.apiUrl.concat(id));
   }
 }

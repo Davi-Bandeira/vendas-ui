@@ -30,27 +30,30 @@ export class ProductComponent implements OnInit {
     if(this.product.name == null || this.product.price == null){
       alert("Digite os campos nome e preço.");
     }else{
-      this.productService.saveProduct(this.product).subscribe(product =>{
-        this.product = new ProductModel();
-        this.listProducts();
-      }, err => {
-        alert("Erro ao salvar o produto.");
-      })
+
+      if(this.product.id){
+        this.productService.updateProduct(this.product.id, this.product).subscribe(product =>{
+          this.product = new ProductModel();
+          this.listProducts();
+        }, err => {
+          alert("Erro ao atualizar o produto.");
+        })
+      }else{
+        this.productService.saveProduct(this.product).subscribe(product =>{
+          this.product = new ProductModel();
+          this.listProducts();
+        }, err => {
+          alert("Erro ao salvar o produto.");
+        })
+      }
     }
   }
 
   update(id: number){
-    if(this.product.name == null || this.product.price == null){
-      alert("Digite os campos nome e preço.");
-    }else{
-      this.productService.updateProduct(id, this.product).subscribe(product =>{
-        this.product = new ProductModel();
-        this.listProducts();
-      }, err => {
-        alert("Erro ao atualizar o produto.");
-      })
-    }
-  }
+    this.productService.searchProduct(id).subscribe(product =>{
+       this.product = product;
+     })
+   }
 
   remove(id: number){
     this.productService.removeProduct(id).subscribe(product =>{

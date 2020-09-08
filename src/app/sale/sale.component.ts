@@ -48,35 +48,39 @@ export class SaleComponent implements OnInit {
       alert("Digite os campos cliente e produto.");
     }else{
 
-      var result = this.validation(this.sale.client, this.sale.product);
+      if(this.sale.id){
 
-      if(result === 1){
-        this.saleService.saveSale(this.sale).subscribe(sale =>{
-          this.sale = new SaleModel();
-          this.listSales();
-        }, err => {
-          alert("Erro ao salvar a venda.");
-        })
+        var result = this.validation(this.sale.client, this.sale.product);
+
+        if(result === 1){
+          this.saleService.updateSale(this.sale.id, this.sale).subscribe(sale =>{
+            this.sale = new SaleModel();
+            this.listSales();
+          }, err => {
+            alert("Erro ao atualizar a venda.");
+         })
+        }
+
+      }else{
+
+        var result = this.validation(this.sale.client, this.sale.product);
+
+        if(result === 1){
+            this.saleService.saveSale(this.sale).subscribe(sale =>{
+            this.sale = new SaleModel();
+            this.listSales();
+          }, err => {
+            alert("Erro ao salvar a venda.");
+          })
+        }
       }
     }
   }
 
   update(id: number){
-    if(this.sale.client == null || this.sale.product == null){
-      alert("Digite os campos cliente e produto.");
-    }else{
-
-      var result = this.validation(this.sale.client, this.sale.product);
-
-      if(result === 1){
-        this.saleService.updateSale(id, this.sale).subscribe(sale =>{
-          this.sale = new SaleModel();
-          this.listSales();
-        }, err => {
-          alert("Erro ao atualizar a venda.");
-        })
-      }
-    }
+    this.saleService.searchSale(id).subscribe(sale =>{
+      this.sale = sale;
+    })
   }
 
   remove(id: number){
@@ -97,8 +101,8 @@ export class SaleComponent implements OnInit {
 
     if(obj != null){
       var client = Object.values(obj);
-      this.sale.client = client[0];
-      this.sale.email = client[1];
+      this.sale.client = client[1];
+      this.sale.email = client[2];
 
     }else{
       alert("Erro! O cliente informado não esta cadastrado!");
@@ -109,8 +113,8 @@ export class SaleComponent implements OnInit {
 
     if(obj != null){
       var product = Object.values(obj);
-      this.sale.product = product[0];
-      this.sale.price = product[1];
+      this.sale.product = product[1];
+      this.sale.price = product[2];
 
     }else{
       alert("Erro! O produto informado não esta cadastrado!");

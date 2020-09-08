@@ -30,25 +30,22 @@ export class ClientComponent implements OnInit {
     if(this.client.name == null || this.client.email == null){
       alert("Digite os campos nome e email");
     }else{
-      this.clientService.saveClient(this.client).subscribe(client =>{
-        this.client = new ClientModel();
-        this.listClients();
-      }, err => {
-        alert("Erro ao salvar o cliente");
-      })
-    }
-  }
 
-  update(id: number){
-    if(this.client.name == null || this.client.email == null){
-      alert("Digite os campos nome e email");
-    }else{
-      this.clientService.updateClient(id, this.client).subscribe(client =>{
-        this.client = new ClientModel();
-        this.listClients();
-      }, err => {
-        alert("Erro ao atualizar o cliente");
-      })
+      if(this.client.id){
+        this.clientService.updateClient(this.client.id, this.client).subscribe(client =>{
+          this.client = new ClientModel();
+          this.listClients();
+        }, err => {
+          alert("Erro ao atualizar o cliente");
+        })
+      }else{
+        this.clientService.saveClient(this.client).subscribe(client =>{
+          this.client = new ClientModel();
+          this.listClients();
+        }, err => {
+          alert("Erro ao salvar o cliente");
+        })
+      }
     }
   }
 
@@ -58,6 +55,13 @@ export class ClientComponent implements OnInit {
       this.listClients();
     }, err => {
       alert("Erro ao remover o cliente");
+      console.log(err);
+    })
+  }
+
+  update(id: number){
+   this.clientService.searchClient(id).subscribe(client =>{
+      this.client = client;
     })
   }
 

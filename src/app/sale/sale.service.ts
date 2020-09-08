@@ -8,7 +8,7 @@ import { SaleModel } from './sale.model';
 })
 export class SaleService {
 
-  private apiUrl = "http://localhost:3000/vendas/";
+  private apiUrl = "http://localhost:8080/sales/";
 
   constructor(private http: HttpClient) { }
 
@@ -24,7 +24,11 @@ export class SaleService {
     return this.http.put(this.apiUrl.concat(id),sale);
   }
 
-  removeSale(id:any){
+  removeSale(id:any):Observable<any>{
     return this.http.delete(this.apiUrl.concat(id));
+  }
+
+  searchSale(id:any): Observable<any>{
+    return this.http.get(this.apiUrl.concat(id));
   }
 }
