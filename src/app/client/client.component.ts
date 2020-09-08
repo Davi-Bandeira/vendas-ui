@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ClientService } from './client.service';
 import { ClientModel } from './client.model';
+import { AlertModalService } from '../shared/alert-modal/alert-modal.service';
 
 @Component({
   selector: 'app-client',
@@ -12,7 +13,8 @@ export class ClientComponent implements OnInit {
   client: ClientModel = new ClientModel();
   clients: Array<any> = new Array();
 
-  constructor(private clientService: ClientService) { }
+  constructor(private clientService: ClientService,
+    private alertService: AlertModalService) { }
 
   ngOnInit(): void {
       this.listClients();
@@ -22,28 +24,36 @@ export class ClientComponent implements OnInit {
     this.clientService.listClients().subscribe(clients => {
       this.clients = clients;
     },err =>{
-      alert('Erro ao listar os clientes');
+      this.alertService.showAlertDanger('Erro ao listar os clientes.');
     })
   }
 
   save(){
     if(this.client.name == null || this.client.email == null){
-      alert("Digite os campos nome e email");
+
+      this.alertService.showAlertWarning('Digite os campos nome e email.');
     }else{
 
       if(this.client.id){
         this.clientService.updateClient(this.client.id, this.client).subscribe(client =>{
           this.client = new ClientModel();
+
+          this.alertService.showAlertSucess('Cliente atualizado com sucesso.');
+
           this.listClients();
         }, err => {
-          alert("Erro ao atualizar o cliente");
+
+          this.alertService.showAlertDanger('Erro ao atualizar o cliente.');
         })
       }else{
         this.clientService.saveClient(this.client).subscribe(client =>{
           this.client = new ClientModel();
+
+          this.alertService.showAlertSucess('Cliente cadastrado com sucesso.');
           this.listClients();
         }, err => {
-          alert("Erro ao salvar o cliente");
+
+          this.alertService.showAlertDanger('Erro ao cadastrar o cliente');
         })
       }
     }
@@ -52,10 +62,11 @@ export class ClientComponent implements OnInit {
   remove(id: number){
     this.clientService.removeClient(id).subscribe(client =>{
       this.client = new ClientModel();
+
+      this.alertService.showAlertSucess('Cliente removido com sucesso.');
       this.listClients();
     }, err => {
-      alert("Erro ao remover o cliente");
-      console.log(err);
+      this.alertService.showAlertDanger('Erro ao remover o cliente');
     })
   }
 

@@ -3,6 +3,8 @@ import { SaleModel } from './sale.model';
 import { SaleService } from './sale.service';
 import { ClientService } from './../client/client.service';
 import { ProductService } from './../product/product.service';
+import { BsModalRef } from 'ngx-bootstrap/modal';
+import { AlertModalService } from '../shared/alert-modal/alert-modal.service';
 
 @Component({
   selector: 'app-sale',
@@ -17,10 +19,13 @@ export class SaleComponent implements OnInit {
   dadosClients: Array<any> = new Array();
   dadosProducts: Array<any> = new Array();
 
+  bsModalRef: BsModalRef;
+
   constructor(
     private saleService: SaleService,
     private clientService: ClientService,
-    private productService: ProductService) { }
+    private productService: ProductService,
+    private alertService: AlertModalService) { }
 
   ngOnInit(): void {
     this.listSales();
@@ -38,14 +43,16 @@ export class SaleComponent implements OnInit {
     this.saleService.listSales().subscribe(sales => {
       this.sales = sales;
     },err =>{
-      alert('Erro ao listar as vendas.');
+
+      this.alertService.showAlertDanger('Erro ao listar as vendas.');
     })
 
   }
 
   save(){
     if(this.sale.client == null || this.sale.product == null){
-      alert("Digite os campos cliente e produto.");
+
+      this.alertService.showAlertWarning('Digite os campos cliente e produto.');
     }else{
 
       if(this.sale.id){
@@ -55,9 +62,12 @@ export class SaleComponent implements OnInit {
         if(result === 1){
           this.saleService.updateSale(this.sale.id, this.sale).subscribe(sale =>{
             this.sale = new SaleModel();
+
+            this.alertService.showAlertSucess('Venda atualizada com sucesso.');
             this.listSales();
           }, err => {
-            alert("Erro ao atualizar a venda.");
+
+            this.alertService.showAlertDanger('Erro ao atualizar a venda.');
          })
         }
 
@@ -68,9 +78,12 @@ export class SaleComponent implements OnInit {
         if(result === 1){
             this.saleService.saveSale(this.sale).subscribe(sale =>{
             this.sale = new SaleModel();
+
+            this.alertService.showAlertSucess('Venda cadastrada com sucesso.');
             this.listSales();
           }, err => {
-            alert("Erro ao salvar a venda.");
+
+            this.alertService.showAlertDanger('Erro ao cadastrar a venda.');
           })
         }
       }
@@ -86,9 +99,12 @@ export class SaleComponent implements OnInit {
   remove(id: number){
     this.saleService.removeSale(id).subscribe(sale =>{
       this.sale = new SaleModel();
+
+      this.alertService.showAlertSucess('Venda removida com sucesso.');
       this.listSales();
     }, err => {
-      alert("Erro ao remover a venda.");
+
+      this.alertService.showAlertDanger('Erro ao remover a venda.');
     })
   }
 
@@ -105,7 +121,8 @@ export class SaleComponent implements OnInit {
       this.sale.email = client[2];
 
     }else{
-      alert("Erro! O cliente informado não esta cadastrado!");
+
+      this.alertService.showAlertWarning('O cliente informado não esta cadastrado.');
       imputClient = 0;
     }
 
@@ -117,7 +134,8 @@ export class SaleComponent implements OnInit {
       this.sale.price = product[2];
 
     }else{
-      alert("Erro! O produto informado não esta cadastrado!");
+
+      this.alertService.showAlertWarning('O produto informado não esta cadastrado.');
       imputProduct = 0;
     }
     if(imputClient === 1 && imputProduct === 1){
